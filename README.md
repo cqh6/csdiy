@@ -35,7 +35,7 @@
 
 # CS 自学指南
 
-> _Everyone should enjoy CS if you have a good teacher to teach you a good course!_
+> _Everyone should enjoy CS if you have a good teacher to teach you a good course!!_
 
 <a href="https://trendshift.io/repositories/4643" target="_blank"><img src="https://trendshift.io/api/badge/repositories/4643" alt="PKUFlyingPig%2Fcs-self-learning | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 
