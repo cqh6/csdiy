@@ -1,0 +1,38 @@
+name: Auto Sync Upstream
+
+permissions:
+  contents: write # 赋予写权限，允许脚本修改仓库代码
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # 每天 UTC 时间 0 点（北京时间早上8点）自动运行
+  workflow_dispatch:    # 允许你手动点击按钮触发
+
+jobs:
+  sync_latest_from_upstream:
+    runs-on: ubuntu-latest
+    name: Sync latest commits from upstream repo
+
+    steps:
+    # 步骤 1: 检出你的代码
+    - name: Checkout target repo
+      uses: actions/checkout@v3
+
+    # 步骤 2: 运行同步动作
+    - name: Sync upstream changes
+      id: sync
+      uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
+      with:
+        upstream_sync_repo: PKUFlyingPig/cs-self-learning # 原仓库地址
+        upstream_sync_branch: master    # 原仓库分支
+        target_sync_branch: master      # 你仓库的分支
+        target_repo_token: ${{ secrets.GITHUB_TOKEN }} # 自动获取 Token
+        test_mode: false
+
+    # 步骤 3: 如果同步失败（有冲突），打印错误
+    - name: Sync check
+      if: failure()
+      run: |
+        echo "[Error] 由于存在代码冲突，自动同步失败。"
+        echo "请手动访问 GitHub 页面解决冲突。"
+        exit 1
